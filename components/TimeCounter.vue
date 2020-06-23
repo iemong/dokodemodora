@@ -33,7 +33,7 @@ export default defineComponent({
       second: string | number
     }>({
       hour: '00',
-      minute: '05',
+      minute: '00',
       second: '00'
     })
 
