@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         GlobalHeader.mb-16
-        TimeCounter.my-6(:remaining-time="remainingTime" @onUpdate="updateTimeObject" isReadOnly="isStarted")
+        TimeCounter.my-6(:remaining-time="remainingTime" @onUpdate="updateTimeObject" :is-read-only="isStarted")
         .flex.justify-center
             template(v-if="isStarted")
                 AButton.mr-4(:text="'一時停止'" @onClick="handleClickPause")
@@ -25,7 +25,7 @@ export default defineComponent({
   },
   setup() {
     const timer = ref<Timer>(new Timer())
-    const remainingTime = ref('00:00:00')
+    const remainingTime = ref('00:05:00')
     const isStarted = ref(false)
 
     const timeObject = ref<TimerValues>({ seconds: 30 })
