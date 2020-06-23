@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         GlobalHeader.mb-16
-        TimeCounter.my-6(:remaining-time="remainingTime")
+        TimeCounter.my-6(:remaining-time="remainingTime" @onUpdate="updateTimeObject")
         .flex.justify-center
             template(v-if="isStarted")
                 AButton.mr-4(:text="'一時停止'" @onClick="handleClickPause")
@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from '@vue/composition-api'
-import Timer from 'easytimer.js'
+import Timer, { TimerValues } from 'easytimer.js'
 import GlobalHeader from '~/components/GlobalHeader.vue'
 import AButton from '~/components/AButton.vue'
 import TimeCounter from '~/components/TimeCounter.vue'
@@ -24,13 +24,18 @@ export default defineComponent({
     GlobalHeader
   },
   setup() {
-    const message = ref('This is a message')
     const timer = ref<Timer>(new Timer())
     const remainingTime = ref('00:00:00')
     const isStarted = ref(false)
 
+    const timeObject = ref<TimerValues>({ seconds: 30 })
+
+    const updateTimeObject = (value: TimerValues) => {
+      timeObject.value = value
+    }
+
     const handleClickStart = () => {
-      timer.value.start({ countdown: true, startValues: { seconds: 30 } })
+      timer.value.start({ countdown: true, startValues: timeObject.value })
       isStarted.value = true
     }
 
@@ -56,13 +61,13 @@ export default defineComponent({
     })
 
     return {
-      message,
       timer,
       remainingTime,
       isStarted,
       handleClickStart,
       handleClickPause,
-      handleClickReset
+      handleClickReset,
+      updateTimeObject
     }
   }
 })
