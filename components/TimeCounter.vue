@@ -8,17 +8,25 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, SetupContext } from '@vue/composition-api'
+import { computed, defineComponent, reactive, SetupContext, watch } from '@vue/composition-api'
 import { TimerValues } from 'easytimer.js'
+
+type Props = {
+  remainingTime: string
+  isReadOnly: boolean
+}
 
 export default defineComponent({
   name: 'TimeCounter',
   props: {
     remainingTime: {
       type: String
+    },
+    isReadOnly: {
+      type: Boolean
     }
   },
-  setup(_, context: SetupContext) {
+  setup(props: Props, context: SetupContext) {
     const state = reactive({
       hour: '00',
       minute: '00',
@@ -50,6 +58,16 @@ export default defineComponent({
           minutes: Number(state.minute),
           seconds: Number(state.second)
         }
+      }
+    )
+
+    watch(
+      () => props.remainingTime,
+      (time: string) => {
+        const arr = time.split(':')
+        state.hour = arr[0].padStart(2, '0')
+        state.minute = arr[1].padStart(2, '0')
+        state.second = arr[2].padStart(2, '0')
       }
     )
 
