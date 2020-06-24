@@ -22,6 +22,10 @@ import AButton from '~/components/AButton.vue'
 import TimeCounter from '~/components/TimeCounter.vue'
 import uho from '~/assets/sounds/uho.mp3'
 import ban from '~/assets/sounds/ban1.mp3'
+import alarm from '~/assets/sounds/alarm.mp3'
+import hakushu from '~/assets/sounds/hakushu.mp3'
+import mario from '~/assets/sounds/mario.mp3'
+import hotaru from '~/assets/sounds/hotaru.mp3'
 import delay from '~/assets/utils/delay'
 export default defineComponent({
   components: {
@@ -33,9 +37,20 @@ export default defineComponent({
     const timer = ref<Timer>(new Timer())
     const remainingTime = ref('00:00:00')
     const isStarted = ref(false)
-    const sound = reactive<{ uho: Howl | null; dora: Howl | null }>({
+    const sound = reactive<{
+      uho: Howl | null
+      dora: Howl | null
+      alarm: Howl | null
+      hakushu: Howl | null
+      mario: Howl | null
+      hotaru: Howl | null
+    }>({
       uho: null,
-      dora: null
+      dora: null,
+      alarm: null,
+      hakushu: null,
+      mario: null,
+      hotaru: null
     })
     const rangeValue = ref(3)
 
@@ -48,7 +63,7 @@ export default defineComponent({
     const handleClickStart = () => {
       timer.value.start({ countdown: true, startValues: timeObject.value })
       isStarted.value = true
-      sound.dora?.play()
+      if (sound.dora) sound.dora.play()
     }
 
     const handleClickPause = () => {
@@ -60,14 +75,19 @@ export default defineComponent({
       timer.value.reset()
       timer.value.stop()
       isStarted.value = false
+
+      sound.mario?.stop()
+      sound.uho?.stop()
+      sound.hotaru?.stop()
+      sound.alarm?.stop()
+      sound.hakushu?.stop()
     }
 
     const updateTime = () => {
       remainingTime.value = timer.value.getTimeValues().toString()
     }
 
-    const finish = async () => {
-      // Gollila part
+    const playUho = async () => {
       if (!sound.uho) return
       sound.uho.play()
       await delay(2000)
@@ -84,6 +104,23 @@ export default defineComponent({
       sound.uho.play()
     }
 
+    const finish = async () => {
+      switch (Number(rangeValue.value)) {
+        case 1: // 蛍の光
+          if (sound.hotaru) sound.hotaru.play()
+          break
+        case 3: // ALARM
+          if (sound.alarm) sound.alarm.play()
+          break
+        case 4: // 拍手
+          if (sound.hakushu) sound.hakushu.play()
+          break
+        case 5: // ゴリラ
+          await playUho()
+          break
+      }
+    }
+
     onMounted(() => {
       timer.value.addEventListener('started', updateTime)
       timer.value.addEventListener('secondsUpdated', updateTime)
@@ -95,6 +132,18 @@ export default defineComponent({
       })
       sound.dora = new Howl({
         src: [ban]
+      })
+      sound.alarm = new Howl({
+        src: [alarm]
+      })
+      sound.hakushu = new Howl({
+        src: [hakushu]
+      })
+      sound.mario = new Howl({
+        src: [mario]
+      })
+      sound.hotaru = new Howl({
+        src: [hotaru]
       })
     })
 
