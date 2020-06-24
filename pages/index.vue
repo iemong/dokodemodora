@@ -52,7 +52,7 @@ export default defineComponent({
       mario: null,
       hotaru: null
     })
-    const rangeValue = ref(3)
+    const rangeValue = ref<number|string>(3)
 
     const timeObject = ref<TimerValues>({ seconds: 30 })
 
@@ -85,7 +85,12 @@ export default defineComponent({
     }
 
     const updateTime = () => {
-      remainingTime.value = timer.value.getTimeValues().toString()
+      const remaining = timer.value.getTimeValues().toString()
+      remainingTime.value = remaining
+      console.log(remaining)
+      if(remaining === '00:01:40' && rangeValue.value === '2') {
+        sound.mario?.play()
+      }
     }
 
     const playUho = async () => {
