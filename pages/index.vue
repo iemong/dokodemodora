@@ -109,14 +109,14 @@ export default defineComponent({
         case 1: // 蛍の光
           if (sound.hotaru) sound.hotaru.play()
           break
-        case 3: // ALARM
-          if (sound.alarm) sound.alarm.play()
-          break
         case 4: // 拍手
           if (sound.hakushu) sound.hakushu.play()
           break
         case 5: // ゴリラ
           await playUho()
+          break
+        default:
+          if (sound.alarm) sound.alarm.play()
           break
       }
     }
