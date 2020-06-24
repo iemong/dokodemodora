@@ -81,6 +81,7 @@ export default defineComponent({
       sound.hotaru?.stop()
       sound.alarm?.stop()
       sound.hakushu?.stop()
+      sound.dora?.stop()
     }
 
     const updateTime = () => {
