@@ -8,15 +8,18 @@
             template(v-else)
                 AButton.mr-4(:text="'スタート'" @onClick="handleClickStart")
             AButton(:text="'リセット'" @onClick="handleClickReset")
+        .level.flex.justify-center.align-center.mt-4
+            input.mr-4(type="range" v-model="rangeValue" step="1" max="5" min="1")
+            label.text-blue-600.text-lg 緊急度 {{ rangeValue }}
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref } from '@vue/composition-api'
 import Timer, { TimerValues } from 'easytimer.js'
+import { Howl } from 'howler'
 import GlobalHeader from '~/components/GlobalHeader.vue'
 import AButton from '~/components/AButton.vue'
 import TimeCounter from '~/components/TimeCounter.vue'
-import { Howl } from 'howler'
 import uho from '~/assets/sounds/uho.mp3'
 import ban from '~/assets/sounds/ban1.mp3'
 import delay from '~/assets/utils/delay'
@@ -34,6 +37,7 @@ export default defineComponent({
       uho: null,
       dora: null
     })
+    const rangeValue = ref(3)
 
     const timeObject = ref<TimerValues>({ seconds: 30 })
 
@@ -102,7 +106,8 @@ export default defineComponent({
       handleClickStart,
       handleClickPause,
       handleClickReset,
-      updateTimeObject
+      updateTimeObject,
+      rangeValue
     }
   }
 })

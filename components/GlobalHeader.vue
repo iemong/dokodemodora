@@ -1,5 +1,5 @@
 <template lang="pug">
-    nav.flex.items-center.justify-between.flex-wrap.bg-teal-500.p-4
+    nav.flex.items-center.justify-between.flex-wrap.bg-blue-600.p-4
         p.text-white
             span.font-semibold.text-xl.tracking-tight どこでもドラ
 </template>

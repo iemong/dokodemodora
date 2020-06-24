@@ -1,10 +1,10 @@
 <template lang="pug">
     p.timer-counter.flex.justify-center
-        input.text-6xl.text-teal-600.w-24(type="number" :value="state.hour" maxlength="2" min="0" max="24" @blur="updateHour" @input="changeHour" :readonly="isReadOnly")
-        span.text-6xl.text-teal-600.mr-2 :
-        input.text-6xl.text-teal-600.w-24(type="number" :value="state.minute" maxlength="2" min="0" max="60" :readonly="isReadOnly" @input="changeMinute" @blur="updateMinute")
-        span.text-6xl.text-teal-600.mr-2 :
-        input.text-6xl.text-teal-600.w-24(type="number" :value="state.second" maxlength="2" min="0" max="60" @input="changeSecond" @blur="updateSecond" :readonly="isReadOnly")
+        input.text-6xl.text-blue-600.w-24(type="number" :value="state.hour" maxlength="2" min="0" max="24" @blur="updateHour" @input="changeHour" :readonly="isReadOnly")
+        span.text-6xl.text-blue-600.mr-2 :
+        input.text-6xl.text-blue-600.w-24(type="number" :value="state.minute" maxlength="2" min="0" max="60" :readonly="isReadOnly" @input="changeMinute" @blur="updateMinute")
+        span.text-6xl.text-blue-600.mr-2 :
+        input.text-6xl.text-blue-600.w-24(type="number" :value="state.second" maxlength="2" min="0" max="60" @input="changeSecond" @blur="updateSecond" :readonly="isReadOnly")
 </template>
 
 <script lang="ts">
